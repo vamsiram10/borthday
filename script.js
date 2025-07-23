@@ -1,8 +1,18 @@
+// IMPORTANT: As of April 30, 2025, GSAP and all bonus plugins (including MorphSVGPlugin) are 100% FREE and available from the official CDN.
+// Make sure you are using the official GSAP and MorphSVGPlugin files, not any "trial" or "gsap-trial" versions.
+// See: https://gsap.com/install/ for details.
+
 const {
   gsap,
   gsap: { to, timeline, set, delayedCall },
   Splitting,
+  MorphSVGPlugin,
 } = window;
+
+// Register MorphSVGPlugin if needed (GSAP 3+)
+if (gsap && gsap.registerPlugin && typeof MorphSVGPlugin !== "undefined") {
+  gsap.registerPlugin(MorphSVGPlugin);
+}
 
 Splitting();
 
@@ -38,7 +48,7 @@ const EYES = document.querySelector(".cake__eyes");
 const BLINK = (eyes) => {
   gsap.set(eyes, { scaleY: 1 });
   if (eyes.BLINK_TL) eyes.BLINK_TL.kill();
-  eyes.BLINK_TL = new gsap.timeline({
+  eyes.BLINK_TL = gsap.timeline({
     delay: Math.floor(Math.random() * 4) + 1,
     onComplete: () => BLINK(eyes),
   });
